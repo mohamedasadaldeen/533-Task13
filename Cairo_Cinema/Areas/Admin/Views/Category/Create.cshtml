@@ -1,0 +1,135 @@
+﻿@using Cairo_Cinema.Models
+@model Category
+
+<div class="container-fluid py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="fas fa-plus-circle text-warning me-2"></i>
+                Create Category
+            </h2>
+            <p class="text-secondary mb-0">
+                Add a new category to your cinema website.
+            </p>
+        </div>
+
+        <a href="/Admin/Category/Index" class="btn btn-outline-warning">
+            <i class="fas fa-arrow-left me-1"></i>
+            Back to Categories
+        </a>
+    </div>
+
+    <!-- Create Category Form -->
+    <div class="row">
+        <div class="col-12 col-lg-12 col-xl-12">
+
+            <div class="card bg-dark text-light border-secondary shadow-sm">
+
+                <div class="card-header border-secondary py-3">
+                    <h5 class="mb-0">
+                        <i class="fas fa-layer-group text-warning me-2"></i>
+                        Category Information
+                    </h5>
+                </div>
+
+                <div class="card-body p-4">
+                    <form asp-action="Create" method="post">
+
+                        <!-- Name -->
+                        <div class="mb-4">
+                            <label for="Name" class="form-label fw-semibold">
+                                Category Name <span class="text-danger">*</span>
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="Name"
+                                   asp-for="Name"
+                                   placeholder="Enter category name"
+                                   required>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-4">
+                            <label for="Description" class="form-label fw-semibold">
+                                Description
+                            </label>
+
+                            <textarea class="form-control"
+                                      id="Description"
+                                      asp-for="Description"
+                                      rows="4"
+                                      placeholder="Write a short description..."></textarea>
+                        </div>
+
+                        <!-- Status -->
+
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold d-block">
+                                Status
+                            </label>
+
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="form-check form-switch fs-5 mb-0">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           role="switch"
+                                           id="Status"
+                                           asp-for="Status">
+                                </div>
+
+                                <span id="statusText" class="badge bg-success">
+                                    Active
+                                </span>
+                            </div>
+                        </div>
+
+                        <hr class="border-secondary">
+
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-end gap-2">
+
+                            <a href="#" class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+
+                            <button type="reset" class="btn btn-outline-warning">
+                                <i class="fas fa-redo me-1"></i>
+                                Reset
+                            </button>
+
+                            <button type="submit" class="btn btn-warning fw-semibold">
+                                <i class="fas fa-save me-1"></i>
+                                Create Category
+                            </button>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@* Status *@
+<script>
+    const statusSwitch = document.getElementById('Status');
+    const statusText = document.getElementById('statusText');
+
+    function updateStatus() {
+        statusText.textContent = statusSwitch.checked ? 'Active' : 'Inactive';
+
+        statusText.className = statusSwitch.checked
+            ? 'badge bg-success'
+            : 'badge bg-danger';
+    }
+
+    statusSwitch.addEventListener('change', updateStatus);
+
+    updateStatus();
+</script>

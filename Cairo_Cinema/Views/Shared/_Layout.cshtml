@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cairo_Cinema</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/customer/css/site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+          
+</head>
+<body>
+
+    <header class="cinema-header">
+        <nav class="navbar navbar-expand-lg cinema-navbar">
+            <div class="container">
+
+                <!-- Logo -->
+                <a class="navbar-brand cinema-logo d-flex align-items-center"
+                   asp-controller="Home"
+                   asp-action="Index">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="38"
+                         height="38"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="#ffc107"
+                         stroke-width="1.8"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         class="cinema-logo-icon">
+
+                        <rect x="3" y="7" width="18" height="14" rx="2" />
+                        <path d="M7 7 10 3" />
+                        <path d="M14 7 17 3" />
+                        <path d="M10 12 15 14.5 10 17Z"
+                              fill="#ffc107"
+                              stroke="#ffc107" />
+                    </svg>
+
+                    <span class="cinema-brand-text">
+                        Cairo <span class="cinema-brand-highlight">Cinema</span>
+                    </span>
+                </a>
+
+                <!-- Mobile Toggle Button -->
+                <button class="navbar-toggler cinema-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#cinemaNavbar"
+                        aria-controls="cinemaNavbar"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navbar Links -->
+                <div class="collapse navbar-collapse" id="cinemaNavbar">
+
+                    <ul class="navbar-nav mx-auto cinema-nav-links">
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="#">
+                                Home
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="#">
+                                Movies
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="#">
+                                Categories
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="#">
+                                Cinemas
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                               href="#">
+                                Actors
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <!-- Search -->
+                    <form class="cinema-search-form"
+                          asp-controller="Movie"
+                          asp-action="Index"
+                          method="get">
+
+                        <input class="form-control cinema-search-input"
+                               type="search"
+                               name="search"
+                               placeholder="Search movies..."
+                               aria-label="Search movies" />
+
+                        <button class="btn cinema-search-btn"
+                                type="submit"
+                                aria-label="Search">
+
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="cinema-footer">
+        <div class="container">
+            <div class="footer-content">
+
+                <a asp-controller="Home" asp-action="Index" class="footer-logo">
+                    Cairo <span>Cinema</span>
+                </a>
+
+                <div class="footer-links">
+                    <a href="#">Home</a>
+                    <a href="#">Movies</a>
+                    <a href="#">Categories</a>
+                    <a href="#">Actors</a>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>© @DateTime.Now.Year Cairo Cinema. All rights reserved.</p>
+
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/" aria-label="Facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/" aria-label="Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="https://www.youtube.com/" aria-label="YouTube">
+                        <i class="bi bi-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

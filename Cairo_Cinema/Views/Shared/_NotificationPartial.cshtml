@@ -1,0 +1,17 @@
+﻿@if (TempData["Successfully"] != null)
+
+{
+    <script>
+        toastr.success('@TempData["Successfully"]');
+    </script>
+
+}
+
+@if (TempData["Error_Validation"] != null)
+
+{
+    <script>
+        toastr.error('@TempData["Error_Validation"]');
+    </script>
+
+}

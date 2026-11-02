@@ -1,0 +1,600 @@
+﻿    @using Cairo_Cinema.Models
+@model IEnumerable<Movie>
+
+<style>
+    .movies-page {
+        color: #e9ecef;
+    }
+
+    .movies-card {
+        background: #1b1f24;
+        border: 1px solid #343a40;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .movies-header {
+        background: linear-gradient(135deg, #212529, #343a40);
+        padding: 22px 25px;
+        border-bottom: 1px solid #454b52;
+    }
+
+    .movies-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .movies-subtitle {
+        color: #adb5bd;
+        font-size: .9rem;
+        margin: 0;
+    }
+
+    .movies-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 35px;
+        height: 35px;
+        padding: 0 10px;
+        border-radius: 10px;
+        background: rgba(255, 193, 7, .14);
+        color: #ffc107;
+        font-weight: 700;
+    }
+
+    .btn-add-movie {
+        background: #ffc107;
+        color: #212529;
+        border: none;
+        border-radius: 9px;
+        padding: 10px 16px;
+        font-weight: 700;
+        transition: .2s ease;
+        text-decoration: none;
+    }
+
+        .btn-add-movie:hover {
+            background: #ffca2c;
+            color: #212529;
+            transform: translateY(-2px);
+        }
+
+    .movies-table {
+        margin-bottom: 0;
+        color: #e9ecef;
+        border-color: #343a40;
+    }
+
+        .movies-table thead th {
+            background: #252a30;
+            color: #ffc107;
+            font-size: .85rem;
+            font-weight: 700;
+            padding: 16px 12px;
+            white-space: nowrap;
+            border-color: #343a40;
+        }
+
+        .movies-table tbody td {
+            background: #1b1f24;
+            padding: 14px 12px;
+            vertical-align: middle;
+            border-color: #343a40;
+        }
+
+        .movies-table tbody tr {
+            transition: background .2s ease;
+        }
+
+            .movies-table tbody tr:hover td {
+                background: #252a30;
+            }
+
+    .movie-id {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 38px;
+        height: 32px;
+        padding: 0 8px;
+        border-radius: 8px;
+        background: #343a40;
+        color: #ffc107;
+        font-weight: 700;
+    }
+
+    .movie-name {
+        color: #f8f9fa;
+        font-weight: 600;
+    }
+
+    .movie-name-icon {
+        color: #ffc107;
+        margin-right: 8px;
+    }
+
+    .movie-description {
+        color: #adb5bd;
+        font-size: .9rem;
+        min-width: 180px;
+        max-width: 300px;
+        line-height: 1.6;
+    }
+
+    .movie-image {
+        width: 105px;
+        height: 72px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 10px;
+        border: 1px solid #495057;
+        padding: 3px;
+        background: #212529;
+        transition: transform .2s ease;
+    }
+
+        .movie-image:hover {
+            transform: scale(1.06);
+        }
+
+    .movie-status {
+        display: inline-block;
+        min-width: 85px;
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-size: .78rem;
+        font-weight: 700;
+    }
+
+    .movie-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 9px;
+        margin: 0 3px;
+        transition: .2s ease;
+    }
+
+        .movie-action:hover {
+            transform: translateY(-2px);
+        }
+
+    .movies-footer {
+        background: #212529;
+        border-top: 1px solid #343a40;
+        color: #adb5bd;
+        padding: 15px 22px;
+        font-size: .85rem;
+    }
+
+    @@media (max-width: 576px) {
+        .movies-header {
+            padding: 18px 15px;
+        }
+
+        .movies-title {
+            font-size: 1.1rem;
+        }
+
+        .btn-add-movie {
+            padding: 9px 11px;
+            font-size: .85rem;
+        }
+    }
+</style>
+
+<!-- Movies Filter -->
+<form class="cinema-filter">
+
+    <!-- Filter Header -->
+    <div class="filter-header">
+        <div>
+            <h4><i class="bi bi-sliders"></i> Filter Movies</h4>
+            <p>Find your next favorite movie</p>
+        </div>
+
+        <button asp-controller="Movie"
+                asp-action="Index"
+                class="filter-reset">
+            <i class="bi bi-arrow-counterclockwise"></i>
+            Reset
+        </button>
+    </div>
+
+    <div class="filter-controls">
+
+        <!-- Price -->
+        <div class="filter-group">
+            <label for="filterPrice">
+                <i class="bi bi-cash-coin"></i> Price
+            </label>
+            <select name="_Price" id="_Price" class="cinema-filter-input">
+                <option value="">All Prices</option>
+                @foreach (var item in Model)
+                {
+                    if (item.Price > 0 && item.Price < 100)
+                    {
+                        <option value="@item.Price">Under 100 EGP</option>
+                    }
+
+                    if (item.Price >= 100 && item.Price <= 200)
+                    {
+                        <option value="@item.Price">100 - 200 EGP</option>
+                    }
+
+                    if (item.Price > 200 && item.Price <= 300)
+                    {
+                        <option value="@item.Price">201 - 300 EGP</option>
+                    }
+
+                    if (item.Price > 300 && item.Price <= 400)
+                    {
+                        <option value="@item.Price">301 - 400 EGP</option>
+                    }
+
+                    if (item.Price >= 500 && item.Price <= 500)
+                    {
+                        <option value="@item.Price">+500 EGP</option>
+                    }
+
+                }
+
+            </select>
+        </div>
+
+        <!-- Rating -->
+        <div class="filter-group">
+            <label for="filterRating">
+                <i class="bi bi-star-fill"></i> Rating
+            </label>
+            <input type="number"
+                   name="RateId"
+                   id="filterRating"
+                   class="cinema-filter-input"
+                   placeholder="rating 1-5"
+                   min="0"
+                   max="10"
+                   step="0.1" />
+        </div>
+
+        <!-- Category -->
+        <div class="filter-group">
+            <label for="filterGenre">
+                <i class="bi bi-film"></i> Category
+            </label>
+            <select name="GenreId"
+                    id="filterGenre"
+                    class="cinema-filter-input">
+
+                <option value="">All Categories</option>
+                @foreach (var item in ViewBag.Categories)
+                {
+                    <option value="@item.Id">@item.Name</option>
+
+                }
+
+                @* أضف هنا خيارات التصنيفات الموجودة في قاعدة البيانات *@
+            </select>
+        </div>
+
+        <!-- Cinema -->
+        <div class="filter-group">
+            <label for="filterCinema">
+                <i class="bi bi-camera-reels"></i> Cinema
+            </label>
+            <select name="CinemaId"
+                    id="filterCinema"
+                    class="cinema-filter-input">
+
+                <option value="">All Cinemas</option>
+                @foreach (var item in ViewBag.Cinemas)
+                {
+                    <option value="@item.Id">@item.Name</option>
+
+                }
+                @* أضف هنا خيارات دور السينما الموجودة في قاعدة البيانات *@
+            </select>
+        </div>
+
+        <!-- Sort -->
+        <div class="filter-group">
+            <label for="filterSort">
+                <i class="bi bi-sort-down"></i> Sort By
+            </label>
+            <select name="SortBy"
+                    id="filterSort"
+                    class="cinema-filter-input">
+
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Highest Rating</option>
+            </select>
+        </div>
+
+        <!-- Apply -->
+        <div class="filter-group filter-action">
+            <label>&nbsp;</label>
+            <button type="submit" class="filter-apply-btn">
+                <i class="bi bi-search"></i>
+                Apply Filters
+            </button>
+        </div>
+
+    </div>
+</form>
+
+<div class="container-fluid py-4 movies-page">
+
+    <div class="movies-card shadow-lg">
+
+        <!-- Header -->
+        <div class="movies-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+            <div class="d-flex align-items-center gap-3">
+                <div class="rounded-3 bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center"
+                     style="width: 52px; height: 52px; font-size: 1.4rem;">
+                    <i class="fas fa-film"></i>
+                </div>
+
+                <div>
+                    <h4 class="movies-title">
+                        Movies Management
+                    </h4>
+                    <p class="movies-subtitle">
+                        Manage and organize your movie locations
+                    </p>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <div class="movies-count" title="Total movies">
+                    @Model.Count()
+                </div>
+
+                <a href="/Admin/Movie/Create" class="btn-add-movie">
+                    <i class="fas fa-plus me-2"></i>
+                    Add Movie
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Table -->
+        <div class="card-body p-0">
+            <div class="table-responsive">
+
+                <table class="table table-bordered text-center align-middle movies-table">
+
+                    <thead>
+                        <tr>
+                            <th style="width: 70px;">ID</th>
+                            <th style="min-width: 180px;">Name</th>
+                            <th style="min-width: 220px;">Description</th>
+                            <th style="width: 145px;">MainImage</th>
+                            <th style="width: 65px;">Price</th>
+                            <th style="width: 55px;">Rate</th>
+                            <th style="min-width: 180px;">DateTime</th>
+                            <th style="min-width: 180px;">Actor</th>
+                            <th style="width: 85px;">Category</th>
+                            <th style="min-width: 180px;">Cinema</th>
+                            <th style="width: 110px;">Status</th>
+                            <th style="width: 110px; white-space: nowrap;">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="movie-id">
+                                        #@item.Id
+                                    </span>
+                                </td>
+
+                                <td class="text-start">
+                                    <span class="movie-name">
+                                        <i class="fas fa-video movie-name-icon"></i>
+                                        @item.Name
+                                    </span>
+                                </td>
+
+                                <td class="text-start">
+                                    <div class="movie-description">
+                                        @item.Description
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <img src="~/images/Movie/@item.MainImage"
+                                         alt="@item.Name"
+                                         class="movie-image"
+                                         loading="lazy" />
+                                </td>
+
+                                <td class="text-start">
+                                    <div class="movie-description">
+                                        @item.Price
+                                    </div>
+                                </td>
+
+                                <td class="text-start">
+                                    <div class="movie-description">
+                                        @item.Rate
+                                    </div>
+                                </td>
+
+                                <td class="text-start">
+                                    <div class="movie-description">
+                                        @item.DateTime
+                                    </div>
+                                </td>
+
+                                <td class="text-start">
+                                    <div class="movie-Name">
+                                        @item.Actor.Name
+                                    </div>
+                                </td>
+
+                                <td class="text-start">
+                                    <div class="movie-Name">
+                                        @item.Category.Name
+                                    </div>
+                                </td>
+
+                                <td class="text-start">
+                                    <div class="movie-Name">
+                                        @item.Cinema.Name
+                                    </div>
+                                </td>
+                                    
+
+                                <td>
+                                    @if (item.Status == true)
+                                    {
+                                        <span class="badge bg-success movie-status">
+                                            <i class="fas fa-check-circle me-1"></i>
+                                            Active
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger movie-status">
+                                            <i class="fas fa-times-circle me-1"></i>
+                                            InActive
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    <a asp-controller="Movie"
+                                       asp-action="Update"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-warning movie-action"
+                                       title="Edit Movie"
+                                       aria-label="Edit Movie">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    <a asp-controller="Movie"
+                                       asp-action="Delete"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-danger movie-action"
+                                       title="Delete Movie"
+                                       aria-label="Delete Movie"
+                                       onclick="confirmDelete(event, this)">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="movies-footer d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <span>
+                <i class="fas fa-film text-warning me-2"></i>
+                Cairo Movie
+            </span>
+
+            <span>
+                Total Movies:
+                <strong class="text-warning">@Model.Count()</strong>
+            </span>
+        </div>
+
+    </div>
+</div>
+
+<!-- Movies Pagination -->
+<nav class="movies-pagination" aria-label="Movies pages">
+    <ul class="pagination">
+
+        <!-- Previous -->
+        <li class="page-item @(ViewBag.CurrentPage==1 ? "disabled" : "")">
+            <a class="page-link" href="/Admin/Movie/Index?Page=@(ViewBag.CurrentPage - 1)" aria-label="Previous page">
+                <i class="bi bi-chevron-left"></i>
+                <span>Previous</span>
+            </a>
+        </li>
+
+        <!-- Page 1 -->
+         @for(int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+        <li class="page-item @(ViewBag.CurrentPage==i ? "active" : "")">
+           
+                <a class="page-link" href="/Admin/Movie/Index?Page=@i" aria-current="page">@i</a>
+        </li>
+        }
+
+        <!-- Next -->
+        <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link" href="/Admin/Movie/Index?Page=@(ViewBag.CurrentPage + 1)" aria-label="Next page">
+                <span>Next</span>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
+
+    </ul>
+</nav>
+
+@section Scripts{
+    <partial name="_NotificationPartial" />
+}
+
+@* SweetAlert(Delete) *@
+<script>
+    function confirmDelete(event, element) {
+        event.preventDefault();
+
+        const deleteUrl = element.href;
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire({
+                    title: "Deleted!",
+                    text: "Your movie has been deleted.",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.href = deleteUrl;
+                });
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: "Cancelled",
+                    text: "Your movie is safe.",
+                    icon: "error"
+                });
+            }
+        });
+    }
+</script>

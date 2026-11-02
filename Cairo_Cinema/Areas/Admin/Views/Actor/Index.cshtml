@@ -1,0 +1,331 @@
+﻿@using Cairo_Cinema.Models
+@model IEnumerable<Actor>
+
+<style>
+    .actors-page {
+        color: #e9ecef;
+    }
+
+    .actors-card {
+        background: #1b1f24;
+        border: 1px solid #343a40;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .actors-header {
+        background: linear-gradient(135deg, #212529, #343a40);
+        padding: 22px 25px;
+        border-bottom: 1px solid #454b52;
+    }
+
+    .actors-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .actors-subtitle {
+        color: #adb5bd;
+        font-size: .9rem;
+        margin: 0;
+    }
+
+    .actors-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 35px;
+        height: 35px;
+        padding: 0 10px;
+        border-radius: 10px;
+        background: rgba(255, 193, 7, .14);
+        color: #ffc107;
+        font-weight: 700;
+    }
+
+    .btn-add-actor {
+        background: #ffc107;
+        color: #212529;
+        border: none;
+        border-radius: 9px;
+        padding: 10px 16px;
+        font-weight: 700;
+        transition: .2s ease;
+        text-decoration: none;
+    }
+
+        .btn-add-actor:hover {
+            background: #ffca2c;
+            color: #212529;
+            transform: translateY(-2px);
+        }
+
+    .actors-table {
+        margin-bottom: 0;
+        color: #e9ecef;
+        border-color: #343a40;
+    }
+
+        .actors-table thead th {
+            background: #252a30;
+            color: #ffc107;
+            font-size: .85rem;
+            font-weight: 700;
+            padding: 16px 12px;
+            white-space: nowrap;
+            border-color: #343a40;
+        }
+
+        .actors-table tbody td {
+            background: #1b1f24;
+            padding: 14px 12px;
+            vertical-align: middle;
+            border-color: #343a40;
+        }
+
+        .actors-table tbody tr {
+            transition: background .2s ease;
+        }
+
+            .actors-table tbody tr:hover td {
+                background: #252a30;
+            }
+
+    .actor-id {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 38px;
+        height: 32px;
+        padding: 0 8px;
+        border-radius: 8px;
+        background: #343a40;
+        color: #ffc107;
+        font-weight: 700;
+    }
+
+    .actor-avatar {
+        width: 62px;
+        height: 62px;
+        object-fit: cover;
+        object-position: center top;
+        border-radius: 50%;
+        border: 2px solid #ffc107;
+        padding: 2px;
+        background: #212529;
+    }
+
+    .actor-name {
+        font-weight: 600;
+        color: #f8f9fa;
+    }
+
+    .actor-name-icon {
+        color: #ffc107;
+        margin-right: 8px;
+    }
+
+    .actor-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 9px;
+        margin: 0 3px;
+        transition: .2s ease;
+    }
+
+        .actor-action:hover {
+            transform: translateY(-2px);
+        }
+
+    .actors-footer {
+        background: #212529;
+        border-top: 1px solid #343a40;
+        color: #adb5bd;
+        padding: 15px 22px;
+        font-size: .85rem;
+    }
+
+    @@media (max-width: 576px) {
+        .actors-header {
+            padding: 18px 15px;
+        }
+
+        .actors-title {
+            font-size: 1.1rem;
+        }
+
+        .btn-add-actor {
+            padding: 9px 11px;
+            font-size: .85rem;
+        }
+    }
+</style>
+
+<div class="container-fluid py-4 actors-page">
+
+    <div class="actors-card shadow-lg">
+
+        <!-- Header -->
+        <div class="actors-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+            <div class="d-flex align-items-center gap-3">
+                <div class="rounded-3 bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center"
+                     style="width: 52px; height: 52px; font-size: 1.4rem;">
+                    <i class="fas fa-users"></i>
+                </div>
+
+                <div>
+                    <h4 class="actors-title">
+                        Actors Management
+                    </h4>
+                    <p class="actors-subtitle">
+                        Manage and organize your cinema actors
+                    </p>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <div class="actors-count" title="Total actors">
+                    @Model.Count()
+                </div>
+
+                <a asp-area="Admin"
+                   asp-controller="Actor"
+                   asp-action="Create"
+                   class="btn-add-actor">
+                    <i class="fas fa-plus me-2"></i>
+                    Add Actor
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Table -->
+        <div class="card-body p-0">
+            <div class="table-responsive">
+
+                <table class="table table-bordered text-center align-middle actors-table">
+
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;">ID</th>
+                            <th class="text-start">Actor Name</th>
+                            <th style="width: 150px;">Profile Photo</th>
+                            <th style="width: 150px;">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="actor-id">
+                                        #@item.Id
+                                    </span>
+                                </td>
+
+                                <td class="text-start">
+                                    <span class="actor-name">
+                                        <i class="fas fa-user-circle actor-name-icon"></i>
+                                        @item.Name
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <img src="@Url.Content("~/Images/Actor/" + item.Image)"
+                                         alt="@item.Name"
+                                         class="actor-avatar"
+                                         loading="lazy" />
+                                </td>
+
+                                <td>
+                                    <a asp-area="Admin"
+                                       asp-controller="Actor"
+                                       asp-action="Update"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-warning actor-action"
+                                       title="Edit Actor"
+                                       aria-label="Edit Actor">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+
+                                    <a asp-area="Admin"
+                                       asp-controller="Actor"
+                                       asp-action="Delete"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-danger actor-action"
+                                       title="Delete Actor"
+                                       aria-label="Delete Actor"
+                                       onclick="confirmDelete(event, this)">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="actors-footer d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <span>
+                <i class="fas fa-film text-warning me-2"></i>
+                Cairo Cinema
+            </span>
+
+            <span>
+                Total Actors:
+                <strong class="text-warning">@Model.Count()</strong>
+            </span>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <partial name="_NotificationPartial" />
+}
+@* SweetAlert(Delete) *@
+<script>
+    function confirmDelete(event, element) {
+        event.preventDefault();
+
+        const deleteUrl = element.href;
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success mx-2",
+                cancelButton: "btn btn-danger mx-2"
+            },
+            buttonsStyling: false
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = deleteUrl;
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire({
+                    title: "Cancelled",
+                    text: "Your actor is safe.",
+                    icon: "info"
+                });
+            }
+        });
+    }
+</script>

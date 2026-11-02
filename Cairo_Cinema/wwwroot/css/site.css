@@ -1,0 +1,283 @@
+
+/* Cairo Cinema Dashboard Theme */
+:root {
+    --cinema-bg: #151519;
+    --cinema-surface: #202027;
+    --cinema-surface-hover: #292931;
+    --cinema-gold: #ffc107;
+    --cinema-gold-hover: #e5ac00;
+    --cinema-text: #f4f4f5;
+    --cinema-muted: #a5a5ad;
+    --cinema-border: #34343d;
+}
+
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+    background: var(--cinema-bg);
+}
+
+body {
+    color: var(--cinema-text);
+}
+
+/* Keep the top navigation at the top and the sidenav directly beneath it. */
+.sb-topnav {
+    min-height: 56px;
+    margin: 0;
+    background: #101014 !important;
+    border-bottom: 1px solid rgba(255, 193, 7, .35);
+}
+
+    .sb-topnav .navbar-brand {
+        color: var(--cinema-gold) !important;
+        font-weight: 800;
+        letter-spacing: .3px;
+    }
+
+    .sb-topnav .btn-link,
+    .sb-topnav .nav-link {
+        color: var(--cinema-text) !important;
+    }
+
+    .sb-topnav .form-control {
+        color: var(--cinema-text);
+        background: var(--cinema-surface);
+        border-color: var(--cinema-border);
+    }
+
+        .sb-topnav .form-control::placeholder {
+            color: var(--cinema-muted);
+        }
+
+#layoutSidenav {
+    display: flex;
+    align-items: stretch;
+    min-width: 0;
+    min-height: calc(100vh - 56px);
+    margin: 0;
+}
+
+#layoutSidenav_nav {
+    flex: 0 0 225px;
+    width: 225px;
+    min-width: 225px;
+    margin: 0;
+}
+
+.sb-sidenav.sb-sidenav-dark {
+    min-height: calc(100vh - 56px);
+    background: #101014;
+    color: var(--cinema-text);
+}
+
+.sb-sidenav-dark .sb-sidenav-menu .sb-sidenav-menu-heading {
+    color: var(--cinema-gold);
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.sb-sidenav-dark .sb-sidenav-menu .nav-link {
+    color: #c9c9ce;
+    transition: color .2s ease, background-color .2s ease;
+}
+
+    .sb-sidenav-dark .sb-sidenav-menu .nav-link:hover,
+    .sb-sidenav-dark .sb-sidenav-menu .nav-link.active {
+        color: var(--cinema-gold);
+        background: rgba(255, 193, 7, .08);
+    }
+
+.sb-sidenav-dark .sb-nav-link-icon,
+.sb-sidenav-dark .sb-sidenav-collapse-arrow {
+    color: var(--cinema-gold);
+}
+
+.sb-sidenav-footer {
+    color: var(--cinema-muted) !important;
+    background: #0b0b0e !important;
+    border-top: 1px solid var(--cinema-border);
+}
+
+/* Content and footer share the same column; no extra container after the dashboard. */
+#layoutSidenav_content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-width: 0;
+    min-height: calc(100vh - 56px);
+    margin: 0;
+    padding: 0;
+    background: var(--cinema-bg);
+}
+
+.dashboard-page-content {
+    flex: 1 0 auto;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 24px;
+    color: var(--cinema-text);
+    background: transparent;
+}
+
+#layoutSidenav_content > footer {
+    flex-shrink: 0;
+    width: 100%;
+    height:70px;
+    padding: 24px 24px !important;
+    color: var(--cinema-muted) !important;
+    background: #101014 !important;
+    border-top: 1px solid rgba(255, 193, 7, .3);
+}
+
+    #layoutSidenav_content > footer .text-muted {
+        color: var(--cinema-muted) !important;
+    }
+
+    #layoutSidenav_content > footer a {
+        color: var(--cinema-gold);
+        text-decoration: none;
+    }
+
+        #layoutSidenav_content > footer a:hover {
+            color: var(--cinema-gold-hover);
+        }
+
+/* Harmonize common Bootstrap components with the site's cinema colors. */
+#layoutSidenav_content .card {
+    color: var(--cinema-text);
+    background: var(--cinema-surface);
+    border: 1px solid var(--cinema-border);
+}
+
+#layoutSidenav_content .table {
+    --bs-table-bg: var(--cinema-surface);
+    --bs-table-color: var(--cinema-text);
+    --bs-table-border-color: var(--cinema-border);
+}
+
+#layoutSidenav_content .form-control,
+#layoutSidenav_content .form-select {
+    color: var(--cinema-text);
+    background-color: var(--cinema-surface);
+    border-color: var(--cinema-border);
+}
+
+    #layoutSidenav_content .form-control::placeholder {
+        color: var(--cinema-muted);
+    }
+
+    #layoutSidenav_content .form-control:focus,
+    #layoutSidenav_content .form-select:focus {
+        border-color: var(--cinema-gold);
+        box-shadow: 0 0 0 .2rem rgba(255, 193, 7, .15);
+    }
+
+#layoutSidenav_content .btn-primary {
+    color: #151519;
+    background: var(--cinema-gold);
+    border-color: var(--cinema-gold);
+}
+
+    #layoutSidenav_content .btn-primary:hover {
+        color: #151519;
+        background: var(--cinema-gold-hover);
+        border-color: var(--cinema-gold-hover);
+    }
+
+#layoutSidenav_content .dropdown-menu {
+    color: var(--cinema-text);
+    background: var(--cinema-surface);
+    border-color: var(--cinema-border);
+}
+
+#layoutSidenav_content .dropdown-item {
+    color: var(--cinema-text);
+}
+
+    #layoutSidenav_content .dropdown-item:hover {
+        color: var(--cinema-gold);
+        background: var(--cinema-surface-hover);
+    }
+
+@media (max-width: 991.98px) {
+    #layoutSidenav_nav {
+        flex-basis: 225px;
+        width: 225px;
+        min-width: 225px;
+    }
+
+    .dashboard-page-content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #layoutSidenav_nav {
+        width: 0;
+        min-width: 0;
+        flex-basis: 0;
+        overflow: hidden;
+    }
+
+    #layoutSidenav_content {
+        width: 100%;
+    }
+
+    .dashboard-page-content {
+        padding: 16px 12px;
+    }
+
+    #layoutSidenav_content > footer {
+        padding: 14px 12px !important;
+    }
+}
+
+/* Extend only the footer's top border across the sidebar area.
+   Keep footer content inside the content column so it is never hidden by the sidebar. */
+#layoutSidenav_content > footer {
+    position: relative;
+    width: 100%;
+    margin-left: 0 !important;
+    box-sizing: border-box;
+    border-top: 0 !important;
+}
+
+    #layoutSidenav_content > footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -225px;
+        width: calc(100% + 225px);
+        border-top: 1px solid rgba(255, 193, 7, .35);
+        pointer-events: none;
+    }
+
+@media (max-width: 767.98px) {
+    #layoutSidenav_content > footer::before {
+        left: 0;
+        width: 100%;
+    }
+}
+
+/* Match the navbar search button and icon to Cairo Cinema's gold theme. */
+.sb-topnav #btnNavbarSearch {
+    color: #151519 !important;
+    background-color: var(--cinema-gold) !important;
+    border-color: var(--cinema-gold) !important;
+}
+
+    .sb-topnav #btnNavbarSearch:hover,
+    .sb-topnav #btnNavbarSearch:focus {
+        color: #151519 !important;
+        background-color: var(--cinema-gold-hover) !important;
+        border-color: var(--cinema-gold-hover) !important;
+    }
+
+    .sb-topnav #btnNavbarSearch .fa-search {
+        color: #151519 !important;
+    }

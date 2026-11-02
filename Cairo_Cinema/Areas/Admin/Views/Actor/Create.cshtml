@@ -1,0 +1,126 @@
+﻿@using Cairo_Cinema.Models
+@model Actor
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+
+            <div class="card bg-dark text-light border-secondary shadow-lg rounded-4">
+
+                <!-- Header -->
+                <div class="card-header border-secondary text-center py-4">
+                    <h3 class="fw-bold mb-2">
+                        <i class="fas fa-user-plus text-warning me-2"></i>
+                        Create Actor
+                    </h3>
+                    <p class="text-secondary mb-0">
+                        Add a new actor to Cairo Cinema
+                    </p>
+                </div>
+
+                <div class="card-body p-4 p-md-5">
+
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                         
+                          
+
+                        <!-- Circular Image Preview -->
+                        <div class="text-center mb-4">
+
+                            <div class="position-relative d-inline-block">
+
+                                <img id="actorPreview"
+                                     src="@Url.Content("~/Images/Actor/actor.jpg")"
+                                     alt="Actor Image"
+                                     class="rounded-circle border border-3 border-warning shadow"
+                                     style="width: 160px;
+                                height: 160px;
+                                object-fit: cover;">
+
+                                <label for="ImageFile"
+                                       class="btn btn-warning rounded-circle position-absolute bottom-0 end-0 shadow"
+                                       style="width: 45px;
+                                        height: 45px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        cursor: pointer;"
+                                       title="Choose Image">
+                                    <i class="fas fa-camera"></i>
+                                </label>
+
+                            </div>
+
+                            <p class="text-secondary small mt-3 mb-0">
+                                Choose an actor photo
+                            </p>
+
+                            <input type="file"
+                                   id="ImageFile"
+                                   name="ImageFile"
+                                   class="d-none"
+                                   accept="image/*"
+                                   required
+                                   onchange="previewActorImage(event)">
+                            <span asp-validation-for="Image" class="text-danger"></span>
+                        </div>
+
+                        <!-- Actor Name -->
+                        <div class="mb-4">
+                            <label asp-for="Name"
+                                   class="form-label fw-semibold">
+                                Actor Name
+                                <span class="text-danger">*</span>
+                            </label>
+
+                            <input asp-for="Name"
+                                   class="form-control form-control-lg"
+                                   placeholder="Enter actor name"
+                                   required />
+
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                                  
+                        </div>
+
+                        <hr class="border-secondary mb-4">
+
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-between gap-2">
+
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary px-4">
+                                <i class="fas fa-arrow-left me-1"></i>
+                                Back
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-warning fw-bold px-4">
+                                <i class="fas fa-save me-2"></i>
+                                Create Actor
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@* Image *@
+<script>
+    function previewActorImage(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('actorPreview');
+
+        if (file) {
+            preview.src = URL.createObjectURL(file);
+        }
+    }
+</script>

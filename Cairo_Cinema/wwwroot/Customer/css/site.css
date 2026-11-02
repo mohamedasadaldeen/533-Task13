@@ -1,0 +1,981 @@
+/* =========================================================
+   CAIRO CINEMA
+   Clean stylesheet — Header, Movies Filter, Movies Grid,
+   Pagination, Footer, Background Watermark, Responsive
+========================================================= */
+
+
+/* =========================================================
+   1. GLOBAL STYLES & PAGE BACKGROUND
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    position: relative;
+    isolation: isolate;
+    overflow-x: hidden;
+    color: #ffffff;
+    background-color: #151519;
+    background-image: radial-gradient(circle at 15% 20%, rgba(255, 193, 7, 0.045), transparent 25%), radial-gradient(circle at 85% 65%, rgba(255, 193, 7, 0.035), transparent 28%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='230' height='230' viewBox='0 0 230 230'%3E%3Cg fill='none' stroke='%23ffc107' stroke-opacity='.10' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M35 55h58v43H35z M35 67h58 M42 55l9 12m7-12 9 12m7-12 9 12'/%3E%3Ccircle cx='166' cy='54' r='22'/%3E%3Ccircle cx='166' cy='54' r='5'/%3E%3Ccircle cx='166' cy='42' r='3'/%3E%3Ccircle cx='177' cy='60' r='3'/%3E%3Ccircle cx='155' cy='60' r='3'/%3E%3Cpath d='M45 158h55a8 8 0 0 1 0 16v12H45v-12a8 8 0 0 1 0-16z M73 160v24' stroke-dasharray='3 4'/%3E%3Cpath d='m167 145 5 11 12 1-9 8 3 12-11-6-10 6 2-12-9-8 12-1z'/%3E%3Cpath d='M125 100v14m-7-7h14 M193 194v12m-6-6h12 M118 38v9m-4-4h8'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat, no-repeat, repeat;
+    background-size: auto, auto, 230px 230px;
+    background-attachment: scroll;
+}
+
+
+/* =========================================================
+   2. HEADER & NAVIGATION
+========================================================= */
+
+.cinema-header {
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    background-color: #101014;
+    border-bottom: 1px solid rgba(255, 193, 7, 0.35);
+}
+
+.cinema-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 15px 30px;
+}
+
+.cinema-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+    .cinema-logo:hover {
+        color: #ffffff;
+    }
+
+.cinema-logo-icon {
+    color: #ffc107;
+    font-size: 30px;
+}
+
+.cinema-brand-text {
+    color: #ffffff;
+}
+
+.cinema-brand-highlight {
+    color: #ffc107;
+}
+
+.cinema-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+    .cinema-nav-links a {
+        color: #cccccc;
+        font-size: 15px;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+        .cinema-nav-links a:hover {
+            color: #ffc107;
+        }
+
+.cinema-search-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cinema-search-input {
+    width: 220px;
+    padding: 9px 12px;
+    color: #ffffff;
+    background-color: #202027;
+    border: 1px solid #35353d;
+    border-radius: 6px;
+    outline: none;
+}
+
+    .cinema-search-input:focus {
+        border-color: #ffc107;
+    }
+
+.cinema-search-btn {
+    padding: 9px 14px;
+    color: #151519;
+    background-color: #ffc107;
+    border: 1px solid #ffc107;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+    .cinema-search-btn:hover {
+        background-color: #e5ac00;
+        border-color: #e5ac00;
+    }
+
+.cinema-toggler {
+    color: #ffc107;
+    border: 1px solid #ffc107;
+}
+
+
+/* =========================================================
+   3. MOVIES FILTER
+========================================================= */
+
+.cinema-filter {
+    position: relative;
+    margin: 24px 24px 0;
+    padding: 24px;
+    color: #ffffff;
+    background: rgba(25, 25, 31, 0.94);
+    border: 1px solid rgba(255, 193, 7, 0.22);
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+}
+
+.filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 22px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #35353d;
+}
+
+    .filter-header h4 {
+        margin: 0 0 6px;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+        .filter-header h4 i {
+            margin-right: 7px;
+            color: #ffc107;
+        }
+
+    .filter-header p {
+        margin: 0;
+        color: #999999;
+        font-size: 13px;
+    }
+
+.filter-reset {
+    padding: 8px 13px;
+    color: #ffc107;
+    background: transparent;
+    border: 1px solid rgba(255, 193, 7, 0.4);
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+    .filter-reset:hover {
+        color: #151519;
+        background: #ffc107;
+    }
+
+.filter-controls {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+    .filter-group label {
+        margin-bottom: 9px;
+        color: #dddddd;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+        .filter-group label i {
+            margin-right: 5px;
+            color: #ffc107;
+        }
+
+.cinema-filter-input {
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    padding: 0 10px;
+    color: #ffffff;
+    background-color: #151519;
+    border: 1px solid #393941;
+    border-radius: 7px;
+    outline: none;
+    font-size: 13px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .cinema-filter-input:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.1);
+    }
+
+    .cinema-filter-input option {
+        color: #ffffff;
+        background-color: #202027;
+    }
+
+.filter-action {
+    min-width: 0;
+}
+
+.filter-apply-btn {
+    width: 100%;
+    height: 44px;
+    padding: 0 12px;
+    color: #151519;
+    background-color: #ffc107;
+    border: 1px solid #ffc107;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+    .filter-apply-btn:hover {
+        background-color: #e5ac00;
+        border-color: #e5ac00;
+        transform: translateY(-1px);
+    }
+
+
+/* =========================================================
+   4. MOVIES PAGE & PAGE HEADING
+========================================================= */
+
+.movies-page {
+    display: block;
+    width: 100%;
+    min-height: 0;
+    margin: 0 0 40px;
+    padding: 0;
+    color: #ffffff;
+    background-color: transparent;
+}
+
+    .movies-page .container-fluid {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 40px 24px 0 !important;
+    }
+
+.movies-heading {
+    margin: 0 0 30px;
+}
+
+    .movies-heading h2 {
+        margin: 0 0 10px;
+        color: #ffffff;
+        font-size: 32px;
+        font-weight: 800;
+    }
+
+        .movies-heading h2 span {
+            color: #ffc107;
+        }
+
+    .movies-heading p {
+        margin: 0;
+        color: #999999;
+        font-size: 15px;
+    }
+
+
+/* =========================================================
+   5. MOVIES GRID & CARDS
+========================================================= */
+
+.movies-page .row {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 1.5rem;
+}
+
+    .movies-page .row > .col {
+        margin-bottom: 0;
+    }
+
+.movie-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background-color: #202027;
+    border: 1px solid #303038;
+    border-radius: 12px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+    .movie-card:hover {
+        transform: translateY(-5px);
+        border-color: #ffc107;
+    }
+
+
+/* =========================================================
+   6. MOVIE POSTER & CATEGORY
+========================================================= */
+
+.movie-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background-color: #202027;
+}
+
+.movie-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.4s ease;
+}
+
+.movie-card:hover .movie-image {
+    transform: scale(1.05);
+}
+
+.movie-category {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+    padding: 5px 10px;
+    color: #151519;
+    background-color: #ffc107;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   7. MOVIE INFORMATION & DETAILS BUTTON
+========================================================= */
+
+.movie-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.movie-title {
+    margin: 0 0 10px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.movie-description {
+    height: 42px;
+    margin: 0;
+    overflow: hidden;
+    color: #aaaaaa;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.movie-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 18px 0;
+    padding-top: 13px;
+    border-top: 1px solid #35353d;
+}
+
+.movie-price {
+    color: #ffc107;
+    font-weight: 700;
+}
+
+.movie-rating {
+    color: #dddddd;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+    .movie-rating i {
+        margin-right: 5px;
+        color: #ffc107;
+    }
+
+.movie-details-btn {
+    display: block;
+    width: 100%;
+    margin-top: auto;
+    padding: 10px;
+    color: #151519;
+    background-color: #ffc107;
+    border-radius: 6px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+    .movie-details-btn:hover {
+        color: #151519;
+        background-color: #e5ac00;
+    }
+
+
+/* =========================================================
+   8. MOVIES PAGINATION
+========================================================= */
+
+.movies-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 35px 0 10px;
+}
+
+    .movies-pagination .pagination {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .movies-pagination .page-item {
+        list-style: none;
+    }
+
+    .movies-pagination .page-link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 7px;
+        min-width: 42px;
+        height: 42px;
+        padding: 0 13px;
+        color: #cccccc;
+        background-color: #202027;
+        border: 1px solid #35353d;
+        border-radius: 8px !important;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+    }
+
+    .movies-pagination .page-item:not(.active):not(.disabled) .page-link:hover {
+        color: #ffc107;
+        background-color: #292930;
+        border-color: #ffc107;
+        transform: translateY(-2px);
+    }
+
+    .movies-pagination .page-item.active .page-link {
+        color: #151519;
+        background-color: #ffc107;
+        border-color: #ffc107;
+        font-weight: 800;
+        box-shadow: 0 4px 12px rgba(255, 193, 7, 0.18);
+    }
+
+    .movies-pagination .page-item.disabled .page-link {
+        color: #66666e;
+        background-color: #19191e;
+        border-color: #2b2b32;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    .movies-pagination .page-link:focus {
+        box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.15);
+        outline: none;
+    }
+
+
+/* =========================================================
+   9. FOOTER
+========================================================= */
+
+.cinema-footer {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 30px 0 15px;
+    color: #aaaaaa;
+    background-color: rgba(16, 16, 20, 0.92);
+    border-top: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.footer-content,
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-content {
+    padding-bottom: 25px;
+}
+
+.footer-logo {
+    color: #ffffff;
+    font-size: 23px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+    .footer-logo span {
+        color: #ffc107;
+    }
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+}
+
+    .footer-links a {
+        color: #bbbbbb;
+        font-size: 14px;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+        .footer-links a:hover {
+            color: #ffc107;
+        }
+
+.footer-bottom {
+    padding-top: 15px;
+    border-top: 1px solid #2b2b32;
+}
+
+    .footer-bottom p {
+        margin: 0;
+        font-size: 13px;
+    }
+
+.footer-social {
+    display: flex;
+    gap: 12px;
+}
+
+    .footer-social a {
+        color: #bbbbbb;
+        font-size: 17px;
+        transition: color 0.2s ease;
+    }
+
+        .footer-social a:hover {
+            color: #ffc107;
+        }
+
+
+/* =========================================================
+   10. RESPONSIVE LAYOUT
+========================================================= */
+
+/* Filter: medium screens */
+@media (max-width: 1399px) {
+    .filter-controls {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Tablets and small laptops */
+@media (max-width: 1199.98px) {
+    .movies-page .container-fluid {
+        padding-right: 20px !important;
+        padding-left: 20px !important;
+    }
+
+    .movie-image-wrapper {
+        height: 300px;
+    }
+}
+
+/* Mobile and tablets */
+@media (max-width: 767.98px) {
+    .cinema-navbar {
+        flex-wrap: wrap;
+        padding: 12px 16px;
+    }
+
+    .cinema-logo {
+        font-size: 22px;
+    }
+
+    .cinema-nav-links {
+        flex-wrap: wrap;
+        gap: 14px;
+    }
+
+    .cinema-search-form {
+        width: 100%;
+    }
+
+    .cinema-search-input {
+        flex: 1;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .cinema-filter {
+        margin: 18px 15px 0;
+        padding: 18px;
+    }
+
+    .filter-controls {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .filter-header h4 {
+        font-size: 18px;
+    }
+
+    .movies-page .container-fluid {
+        padding: 30px 15px 0 !important;
+    }
+
+    .movies-heading {
+        margin-bottom: 24px;
+    }
+
+        .movies-heading h2 {
+            font-size: 26px;
+        }
+
+    .movie-image-wrapper {
+        height: 350px;
+    }
+
+    .footer-content,
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        justify-content: center;
+        gap: 15px;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .filter-header {
+        align-items: flex-start;
+    }
+
+    .filter-reset {
+        padding: 7px 10px;
+        white-space: nowrap;
+    }
+
+    .filter-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .movies-pagination {
+        margin-top: 25px;
+    }
+
+        .movies-pagination .pagination {
+            gap: 5px;
+        }
+
+        .movies-pagination .page-link {
+            min-width: 36px;
+            height: 38px;
+            padding: 0 9px;
+            font-size: 13px;
+        }
+}
+
+
+/* Movies Filter Section */
+.filter-bar {
+    background-color: #151519;
+    padding: 20px 0;
+}
+
+.cinema-filter-container {
+    background-color: #202027;
+    border: 1px solid rgba(255, 193, 7, 0.15);
+    border-radius: 12px;
+    padding: 22px 16px;
+}
+
+/* Filter Inputs */
+.cinema-filter-input {
+    min-height: 44px;
+    background-color: #151519;
+    color: #fff;
+    border: 1px solid #3a3a43;
+    border-radius: 8px;
+}
+
+    .cinema-filter-input:focus {
+        background-color: #151519;
+        color: #fff;
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.15);
+    }
+
+    .cinema-filter-input::placeholder {
+        color: #a5a5ad;
+    }
+
+    .cinema-filter-input option {
+        background-color: #202027;
+        color: #fff;
+    }
+
+/* Filter Button */
+.filter-apply-btn {
+    min-height: 44px;
+    background-color: #ffc107;
+    color: #151519;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+    .filter-apply-btn:hover {
+        background-color: #e0a800;
+        border-color: #e0a800;
+        color: #151519;
+    }
+
+/* Reset Button */
+.filter-reset-btn {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: transparent;
+    color: #ffc107;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+}
+
+    .filter-reset-btn:hover {
+        background-color: #ffc107;
+        color: #151519;
+    }
+
+/* Responsive */
+@media (max-width: 767px) {
+    .cinema-filter-container {
+        padding: 16px 12px;
+    }
+}
+
+
+
+/* Movies Filter Section */
+.filter-bar {
+    background-color: #151519;
+    padding: 20px 0;
+}
+
+.cinema-filter-container {
+    background-color: #202027;
+    border: 1px solid rgba(255, 193, 7, 0.15);
+    border-radius: 12px;
+    padding: 22px 16px;
+}
+
+/* Inputs and Selects */
+.cinema-filter-input {
+    min-height: 44px;
+    background-color: #151519;
+    color: #fff;
+    border: 1px solid #3a3a43;
+    border-radius: 8px;
+}
+
+    .cinema-filter-input:focus {
+        background-color: #151519;
+        color: #fff;
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.15);
+    }
+
+    .cinema-filter-input::placeholder {
+        color: #a5a5ad;
+    }
+
+    .cinema-filter-input option {
+        background-color: #202027;
+        color: #fff;
+    }
+
+/* Apply Button */
+.filter-apply-btn {
+    min-height: 44px;
+    background-color: #ffc107;
+    color: #151519;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+    .filter-apply-btn:hover {
+        background-color: #e0a800;
+        border-color: #e0a800;
+        color: #151519;
+    }
+
+/* Reset Button */
+.filter-reset-btn {
+    min-height: 44px;
+    background-color: transparent;
+    color: #ffc107;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+}
+
+    .filter-reset-btn:hover {
+        background-color: #ffc107;
+        color: #151519;
+    }
+
+/* Responsive */
+@media (max-width: 767px) {
+    .cinema-filter-container {
+        padding: 16px 12px;
+    }
+}
+
+/* Movies Filter Section */
+.filter-bar {
+    background-color: #151519;
+    padding: 20px 0;
+}
+
+/* Filter Form */
+.cinema-filter {
+    background-color: #202027;
+    border: 1px solid rgba(255, 193, 7, 0.15);
+    border-radius: 12px;
+    padding: 22px;
+}
+
+/* Inputs and Selects */
+.cinema-filter-input {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    background-color: #151519;
+    color: #fff;
+    border: 1px solid #3a3a43;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .cinema-filter-input::placeholder {
+        color: #a5a5ad;
+    }
+
+    .cinema-filter-input:focus {
+        background-color: #151519;
+        color: #fff;
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.15);
+    }
+
+    .cinema-filter-input option {
+        background-color: #202027;
+        color: #fff;
+    }
+
+/* Apply Button */
+.filter-apply-btn {
+    min-height: 44px;
+    padding: 10px 14px;
+    background-color: #ffc107;
+    color: #151519;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+    .filter-apply-btn:hover {
+        background-color: #e0a800;
+        border-color: #e0a800;
+        color: #151519;
+    }
+
+/* Reset Button */
+.filter-reset-btn {
+    min-height: 44px;
+    padding: 10px 14px;
+    background-color: transparent;
+    color: #ffc107;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+    .filter-reset-btn:hover {
+        background-color: #ffc107;
+        color: #151519;
+    }
+
+/* Responsive Design */
+@media (max-width: 767px) {
+    .cinema-filter {
+        padding: 16px;
+    }
+}

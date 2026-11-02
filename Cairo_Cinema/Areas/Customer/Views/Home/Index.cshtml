@@ -1,0 +1,246 @@
+﻿@using Cairo_Cinema.Models
+@model List<Movie>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<!-- Movies Filter -->
+<form class="cinema-filter">
+
+    <!-- Filter Header -->
+    <div class="filter-header">
+        <div>
+            <h4><i class="bi bi-sliders"></i> Filter Movies</h4>
+            <p>Find your next favorite movie</p>
+        </div>
+
+        <button asp-controller="Home"
+           asp-action="Index"
+           class="filter-reset">
+            <i class="bi bi-arrow-counterclockwise"></i>
+            Reset
+        </button>
+    </div>
+
+    <div class="filter-controls">
+
+        <!-- Price -->
+        <div class="filter-group">
+            <label for="filterPrice">
+                <i class="bi bi-cash-coin"></i> Price
+            </label>
+            <select name="_Price" id="_Price" class="cinema-filter-input">
+                <option value="">All Prices</option>
+                @foreach(var item in Model)
+                    {
+                    if (item.Price > 0 && item.Price < 100)
+                    {
+                        <option value="@item.Price">Under 100 EGP</option>
+                    }
+
+                    if (item.Price >= 100 && item.Price <= 200)
+                    {
+                        <option value="@item.Price">100 - 200 EGP</option>
+                    }
+
+                    if (item.Price > 200 && item.Price <= 300)
+                    {
+                        <option value="@item.Price">201 - 300 EGP</option>
+                    }
+
+                    if (item.Price > 300 && item.Price <= 400)
+                    {
+                        <option value="@item.Price">301 - 400 EGP</option>
+                    }
+
+                    if (item.Price >= 500 && item.Price <= 500)
+                    {
+                        <option value="@item.Price">+500 EGP</option>
+                    }
+
+                }
+
+            </select>
+        </div>
+
+        <!-- Rating -->
+        <div class="filter-group">
+            <label for="filterRating">
+                <i class="bi bi-star-fill"></i> Rating
+            </label>
+            <input type="number"
+                   name="RateId"
+                   id="filterRating"
+                   class="cinema-filter-input"
+                   placeholder="rating 1-5"
+                   min="0"
+                   max="10"
+                   step="0.1" />
+        </div>
+
+        <!-- Category -->
+        <div class="filter-group">
+            <label for="filterGenre">
+                <i class="bi bi-film"></i> Category
+            </label>
+            <select name="GenreId"
+                    id="filterGenre"
+                    class="cinema-filter-input">
+
+                <option value="">All Categories</option>
+                @foreach (var item in ViewBag.Categories)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                        
+                }
+
+                @* أضف هنا خيارات التصنيفات الموجودة في قاعدة البيانات *@
+            </select>
+        </div>
+
+        <!-- Cinema -->
+        <div class="filter-group">
+            <label for="filterCinema">
+                <i class="bi bi-camera-reels"></i> Cinema
+            </label>
+            <select name="CinemaId"
+                    id="filterCinema"
+                    class="cinema-filter-input">
+
+                <option value="">All Cinemas</option>
+                @foreach (var item in ViewBag.Cinemas)
+                {
+                    <option value="@item.Id">@item.Name</option>
+
+                }
+                @* أضف هنا خيارات دور السينما الموجودة في قاعدة البيانات *@
+            </select>
+        </div>
+
+        <!-- Sort -->
+        <div class="filter-group">
+            <label for="filterSort">
+                <i class="bi bi-sort-down"></i> Sort By
+            </label>
+            <select name="SortBy"
+                    id="filterSort"
+                    class="cinema-filter-input">
+
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Highest Rating</option>
+            </select>
+        </div>
+
+        <!-- Apply -->
+        <div class="filter-group filter-action">
+            <label>&nbsp;</label>
+            <button type="submit" class="filter-apply-btn">
+                <i class="bi bi-search"></i>
+                Apply Filters
+            </button>
+        </div>
+
+    </div>
+</form>
+
+<!-- Movies -->
+
+<div class="movies-page">
+    <div class="container-fluid py-5 px-4">
+
+        <!-- Page Heading -->
+        <div class="movies-heading">
+            <h2>Discover <span>Movies</span></h2>
+            <p>Explore your favorite movies</p>
+        </div>
+
+        <!-- Movies Grid -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-4 g-4">
+
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="movie-card">
+
+                        <div class="movie-image-wrapper">
+                            <img src="~/images/Movie/@item.MainImage"
+                                 alt="@item.Name"
+                                 class="movie-image" />
+
+                            <span class="movie-category">
+                                @item.Category.Name
+                            </span>
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h5 class="movie-title">
+                                @item.Name
+                            </h5>
+
+                            <p class="movie-description">
+                                @item.Description
+                            </p>
+
+                            <div class="movie-meta">
+                                <span class="movie-price">
+                                    @item.Price EGP
+                                </span>
+
+                                <span class="movie-rating">
+                                    <i class="bi bi-star-fill"></i>
+                                    @item.Rate
+                                </span>
+                            </div>
+
+                            <a href="#"
+                               class="movie-details-btn">
+                                View Details
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+                                    
+<!-- Movies Pagination -->
+<nav class="movies-pagination" aria-label="Movies pages">
+    <ul class="pagination">
+
+        <!-- Previous -->
+        <li class="page-item @(ViewBag.CurrentPage==1 ? "disabled" : "")">
+            <a class="page-link" href="/Customer/Home/Index?Page=@(ViewBag.CurrentPage - 1)" aria-label="Previous page">
+                <i class="bi bi-chevron-left"></i>
+                <span>Previous</span>
+            </a>
+        </li>
+
+        <!-- Page 1 -->
+         @for(int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+        <li class="page-item @(ViewBag.CurrentPage==i ? "active" : "")">
+           
+                <a class="page-link" href="/Customer/Home/Index?Page=@i" aria-current="page">@i</a>
+        </li>
+        }
+
+        <!-- Next -->
+        <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+            <a class="page-link" href="/Customer/Home/Index?Page=@(ViewBag.CurrentPage + 1)" aria-label="Next page">
+                <span>Next</span>
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
+
+    </ul>
+</nav>
+
