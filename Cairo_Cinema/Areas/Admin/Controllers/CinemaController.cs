@@ -1,6 +1,4 @@
-﻿using Cairo_Cinema.Data;
-using Cairo_Cinema.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cairo_Cinema.Areas.Admin.Controllers
@@ -8,10 +6,16 @@ namespace Cairo_Cinema.Areas.Admin.Controllers
     [Area("Admin")]
     public class CinemaController : Controller
     {
-        private readonly ApplicationDbContext _context = new ApplicationDbContext();
-        public IActionResult Index()
+        private readonly IRepository<Cinema> _cinemaRepository;// = new Repository<Cinema>();
+
+        public CinemaController(IRepository<Cinema> cinemaRepository)
         {
-            var cinemas = _context.Cinemas.AsQueryable();
+            _cinemaRepository = cinemaRepository;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var cinemas = await _cinemaRepository.GetListAsync();
 
             return View(cinemas.AsEnumerable());
         }
@@ -25,7 +29,7 @@ namespace Cairo_Cinema.Areas.Admin.Controllers
 
         //Post Create
         [HttpPost]
-        public IActionResult Create(Cinema cinema,IFormFile ImageFile)
+        public async Task<IActionResult> Create(Cinema cinema,IFormFile ImageFile)
         {
             if (!ModelState.IsValid)
             {
@@ -43,25 +47,25 @@ namespace Cairo_Cinema.Areas.Admin.Controllers
                 cinema.Image = fileName;
             }
 
-            _context.Add(cinema);
-            _context.SaveChanges();
+            await _cinemaRepository.AddAsync(cinema);
+            await _cinemaRepository.CommitAsync();
             TempData["Successfully"] = "Created Successfully";
             return RedirectToAction(nameof(Index));
         }
 
         //Get Update
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var cinema = _context.Cinemas.FirstOrDefault(c => c.Id == id);
+            var cinema = await _cinemaRepository.GetOneAsync(c => c.Id == id);
             return View(cinema);
         }
 
         //Post Update
         [HttpPost]
-        public IActionResult Update(Cinema cinema, IFormFile ImageFile)
+        public async Task<IActionResult> Update(Cinema cinema, IFormFile ImageFile)
         {
-            var cinemaInDb = _context.Cinemas.AsNoTracking().FirstOrDefault(c => c.Id == cinema.Id);
+            var cinemaInDb = await _cinemaRepository.GetOneAsync(c => c.Id == cinema.Id,isTracked:false);
             
 
             if (ImageFile != null && ImageFile.Length > 0)
@@ -85,23 +89,23 @@ namespace Cairo_Cinema.Areas.Admin.Controllers
                 cinema.Image = cinemaInDb.Image;
             }
 
-            _context.Update(cinema);
-            _context.SaveChanges();
+            _cinemaRepository.Update(cinema);
+            await _cinemaRepository.CommitAsync();
             TempData["Successfully"] = "Updated Successfully";
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var cinema = _context.Cinemas.FirstOrDefault(c => c.Id == id);
+            var cinema = await _cinemaRepository.GetOneAsync(c => c.Id == id);
             var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Cinema",cinema.Image);
             if (System.IO.File.Exists(oldFilePath))
             {
                 System.IO.File.Delete(oldFilePath);
 
             }
-            _context.Remove(cinema);
-            _context.SaveChanges();
+            _cinemaRepository.Remove(cinema);
+            await _cinemaRepository.CommitAsync();
             TempData["Successfully"] = "Deleted Successfully";
             return RedirectToAction(nameof(Index));
 

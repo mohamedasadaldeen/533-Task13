@@ -1,17 +1,21 @@
-﻿using Cairo_Cinema.Data;
-using Cairo_Cinema.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Cairo_Cinema.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class ActorController : Controller
     {
-        private readonly ApplicationDbContext _context = new ApplicationDbContext();
-        public IActionResult Index()
+        //private readonly ApplicationDbContext _context = new ApplicationDbContext();
+        private readonly IRepository<Actor> _actorRepository;// = new Repository<Actor>();
+
+        public ActorController(IRepository<Actor> actorRepository)
         {
-            var actors = _context.Actors.AsQueryable();
+            _actorRepository = actorRepository;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var actors = await _actorRepository.GetListAsync();
 
             return View(actors.AsEnumerable());
         }
@@ -25,13 +29,13 @@ namespace Cairo_Cinema.Areas.Admin.Controllers
 
         //Post Create
         [HttpPost]
-        public IActionResult Create(Actor actor,IFormFile ImageFile)
+        public async Task<IActionResult> Create(Actor actor, IFormFile ImageFile)
         {
             if (!ModelState.IsValid)
             {
                 return View(actor);
             }
-            if(ImageFile != null && ImageFile.Length > 0)
+            if (ImageFile != null && ImageFile.Length > 0)
             {
                 var fileName = Guid.NewGuid().ToString() + "_" + ImageFile.FileName;
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Actor", fileName);
@@ -42,25 +46,25 @@ namespace Cairo_Cinema.Areas.Admin.Controllers
                 actor.Image = fileName;
             }
 
-            _context.Add(actor);
-            _context.SaveChanges();
+            await _actorRepository.AddAsync(actor);
+            await _actorRepository.CommitAsync();
             TempData["Successfully"] = "Created Successfully";
             return RedirectToAction(nameof(Index));
         }
 
         //Get Update
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var actor = _context.Actors.FirstOrDefault(c => c.Id == id);
+            var actor = await _actorRepository.GetOneAsync(c => c.Id == id);
             return View(actor);
         }
 
         //Post Update
         [HttpPost]
-        public IActionResult Update(Actor actor, IFormFile ImageFile)
+        public async Task<IActionResult> Update(Actor actor, IFormFile ImageFile)
         {
-            var actorInDb = _context.Actors.AsNoTracking().FirstOrDefault(c => c.Id == actor.Id);
+            var actorInDb = await _actorRepository.GetOneAsync(c => c.Id == actor.Id, isTracked: false);
 
             if (ImageFile != null && ImageFile.Length > 0)
             {
@@ -84,24 +88,24 @@ namespace Cairo_Cinema.Areas.Admin.Controllers
                 actor.Image = actorInDb.Image;
             }
 
-            _context.Update(actor);
-            _context.SaveChanges();
+            _actorRepository.Update(actor);
+            await _actorRepository.CommitAsync();
             TempData["Successfully"] = "Updated Successfully";
 
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var actor = _context.Actors.FirstOrDefault(c => c.Id == id);
+            var actor = await _actorRepository.GetOneAsync(c => c.Id == id);
             var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images", "Actor", actor.Image);
             if (System.IO.File.Exists(oldFilePath))
             {
                 System.IO.File.Delete(oldFilePath);
 
             }
-            _context.Remove(actor);
-            _context.SaveChanges();
+            _actorRepository.Remove(actor);
+            await _actorRepository.CommitAsync();
             TempData["Successfully"] = "Deleted Successfully";
             return RedirectToAction(nameof(Index));
 

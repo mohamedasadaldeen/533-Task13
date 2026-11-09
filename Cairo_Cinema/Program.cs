@@ -1,3 +1,6 @@
+using Cairo_Cinema.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace Cairo_Cinema
 {
     public class Program
@@ -8,6 +11,23 @@ namespace Cairo_Cinema
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            //Data
+            var connectionString =
+            builder.Configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException("Connection string"
+            + "'DefaultConnection' not found.");
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(connectionString));
+            //Movies:
+
+            // Life time
+            // AddTransient, AddScoped, AddSingleton
+            builder.Services.AddScoped<IRepository<Movie>, Repository<Movie>>();
+            builder.Services.AddScoped<IRepository<Category>, Repository<Category>>();
+            builder.Services.AddScoped<IRepository<Cinema>, Repository<Cinema>>();
+            builder.Services.AddScoped<IRepository<Actor>, Repository<Actor>>();
+            builder.Services.AddScoped<IMovieSubImageRepository, MovieSubImageRepository>();
 
             var app = builder.Build();
 

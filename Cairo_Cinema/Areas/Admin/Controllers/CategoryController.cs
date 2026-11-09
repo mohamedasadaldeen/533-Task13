@@ -7,10 +7,16 @@ namespace Cairo_Cinema.Areas.Admin.Controllers
     [Area("Admin")]
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _context = new ApplicationDbContext();
-        public IActionResult Index()
+        private readonly IRepository<Category> _categoryRepository;// = new Repository<Category>();
+
+        public CategoryController(IRepository<Category> categoryRepository)
         {
-            var categories = _context.Categories.AsQueryable();
+            _categoryRepository = categoryRepository;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var categories = await _categoryRepository.GetListAsync();
 
             return View(categories.AsEnumerable());
         }
@@ -24,36 +30,36 @@ namespace Cairo_Cinema.Areas.Admin.Controllers
 
         //Post Create
         [HttpPost]
-        public IActionResult Create(Category category)
+        public async Task<IActionResult> Create(Category category)
         {
-            _context.Add(category);
-            _context.SaveChanges();
+            await _categoryRepository.AddAsync(category);
+            await _categoryRepository.CommitAsync();
             return RedirectToAction(nameof(Index));
         }
 
         //Get Update
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var category = _context.Categories.FirstOrDefault(c => c.Id == id);
+            var category = await _categoryRepository.GetOneAsync(c => c.Id == id);
             return View(category);
         }
 
         //Post Update
         [HttpPost]
-        public IActionResult Update(Category category)
+        public async Task<IActionResult> Update(Category category)
         {
-            
-            _context.Update(category);
-            _context.SaveChanges();
+
+            _categoryRepository.Update(category);
+            await _categoryRepository.CommitAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var category = _context.Categories.FirstOrDefault(c => c.Id == id);
-            _context.Remove(category);
-            _context.SaveChanges();
+            var category = await _categoryRepository.GetOneAsync(c => c.Id == id);
+            _categoryRepository.Remove(category);
+            await _categoryRepository.CommitAsync();
             return RedirectToAction(nameof(Index));
 
         }
