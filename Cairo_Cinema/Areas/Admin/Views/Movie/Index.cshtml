@@ -1,4 +1,4 @@
-﻿    @using Cairo_Cinema.Models
+﻿@using Cairo_Cinema.Models
 @model IEnumerable<Movie>
 
 <style>
@@ -438,19 +438,19 @@
 
                                 <td class="text-start">
                                     <div class="movie-Name">
-                                        @item.Actor.Name
+                                        @item.Actor?.Name
                                     </div>
                                 </td>
 
                                 <td class="text-start">
                                     <div class="movie-Name">
-                                        @item.Category.Name
+                                        @item.Category?.Name
                                     </div>
                                 </td>
 
                                 <td class="text-start">
                                     <div class="movie-Name">
-                                        @item.Cinema.Name
+                                        @item.Cinema?.Name
                                     </div>
                                 </td>
                                     

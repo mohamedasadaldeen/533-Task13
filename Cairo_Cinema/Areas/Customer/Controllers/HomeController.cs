@@ -10,7 +10,13 @@ namespace Cairo_Cinema.Areas.Customer.Controllers
     [Area("Customer")]
     public class HomeController : Controller
     {
-        private readonly ApplicationDbContext _context = new ApplicationDbContext();
+        private readonly ApplicationDbContext _context;// = new ApplicationDbContext();
+
+        public HomeController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index(FilterVM filter)
         {
             var movies = _context.Movies.AsQueryable();
